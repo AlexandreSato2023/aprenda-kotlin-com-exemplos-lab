@@ -1,21 +1,38 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+enum class Nivel { INICIANTE, INTERMEDIARIO, AVANCADO }
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+data class Usuario(val nome: String,val login: String, val password: String)
 
-class Usuario
-
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(val nome: String, val duracao: Int, val nivelCurso: Nivel)
 
 data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
 
     val inscritos = mutableListOf<Usuario>()
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
     }
+    
+    fun getInscritosList() : List<Usuario> {
+        return inscritos
+    }
+    
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    
+    val usuario1 = Usuario("Alexandre", "iasato@outlook.com", "senha123")
+    val usuario2 = Usuario("Sato", "iasato@email.com", "senha123")
+    
+    val conteudo_kotlin = ConteudoEducacional("Kotlin Experience", 60, Nivel.INTERMEDIARIO)
+    val conteudo_flutter = ConteudoEducacional("Flutter Expert", 80, Nivel.AVANCADO)
+    val conteudo_swift = ConteudoEducacional("Swift Fundamentals", 30, Nivel.INICIANTE)
+    
+    val formacao_android = Formacao("Android Developer", listOf(conteudo_kotlin, conteudo_flutter))
+    val formacao_ios = Formacao("iOS Developer", listOf(conteudo_swift, conteudo_flutter))
+        
+    formacao_android.matricular(usuario1);
+    formacao_android.matricular(usuario2);
+    
+	println("Usuários inscritos: ${formacao_android.getInscritosList()}:")
+    
 }
